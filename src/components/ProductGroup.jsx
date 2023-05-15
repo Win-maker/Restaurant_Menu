@@ -2,7 +2,7 @@ import React from 'react'
 import ProductRow from './ProductRow'
 import { categories } from '../App'
 
-const ProductGroup = ({ product }) => {
+const ProductGroup = ({ product, isAdmin={isAdmin} }) => {
   
   const currentCategory = categories.find(category => category.id === product.id)
   return (
@@ -13,7 +13,7 @@ const ProductGroup = ({ product }) => {
             <h2>Price</h2>
         </div>
 
-            <ProductRow product={product} />
+            <ProductRow product={product} isAdmin={isAdmin} />
            
   
         </div>

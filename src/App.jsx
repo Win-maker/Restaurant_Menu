@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import ProductForm from './components/ProductForm'
-import ProductRow from './components/ProductRow'
 import {v4 as uuid} from 'uuid'
-import ProductList from './components/ProductList'
+import Admin from './pages/Admin'
+import User from './pages/User'
+import { Link, Routes, Route } from 'react-router-dom'
 export const MenuContext = createContext();
 
 
@@ -102,10 +102,10 @@ function App() {
     setSelectedProductId(id)
   }
 
-  function handleProductDataChange(id, productData) {
+  function handleProductDataChange(id, updatedData) {
     const newProduct = [...product]
     const productIndex = newProduct.findIndex(product => product.id === id)
-    newProduct[productIndex] = productData
+    newProduct[productIndex] = updatedData
     setProduct(newProduct)
   }
 
@@ -121,34 +121,17 @@ function App() {
 
   return (
     <MenuContext.Provider value={MenuContextValue}>
-      <main className='bg-gray-100 h-screen'>
-        <div className="container h-screen flex bg-white mx-auto">
-
-          {/* Add Form Starts */}
-          <div className='w-1/2 p-4 flex justify-center'>
-            {selectedProduct && <ProductForm selectedProduct={selectedProduct} />}
-          </div>
-          {/* Add Form Ends */}
-          
-          {/* Preview Section Starts */}
-          <div className='w-1/2 p-4 flex justify-center preview'>
-            <ProductList product={product}/>
-          </div>
-          {/* Preview Section Ends */}
-
-        </div>
-        
-      </main>
-      
-    {showError && (<div className="toast toast-top toast-end">
-        <div className="alert alert-error">
-          <div>
-            <span>
-              Product Deleted
-            </span>
-          </div>
-        </div>
-      </div>)}
+      <nav className='container py-2'>
+        <ul className='flex justify-around text-blue-500'>
+          <Link to='/'>User</Link>
+          <Link to='/admin'>Admin</Link>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path='/' element={<User product={product}/>} />
+        <Route path='/admin' element={<Admin selectedProduct={selectedProduct}
+        product={product} showError={showError}/>} />
+      </Routes>
     </MenuContext.Provider>
   )
 }

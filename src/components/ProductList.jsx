@@ -4,7 +4,7 @@ import { MenuContext } from '../App'
 import ProductGroup from './ProductGroup'
 
 
-const ProductList = ({product}) => {
+const ProductList = ({product,isAdmin=false}) => {
     const { handleProductAdd} = useContext(MenuContext)
   return (
       <>
@@ -16,9 +16,11 @@ const ProductList = ({product}) => {
 
             {/* Product Groups Starts */}
 
-            {product.map(product => <ProductGroup product={product}  key={product.id} />)}
+        {product.map(product => <ProductGroup product={product} key={product.id} isAdmin={isAdmin} />)}
 
-            <button className="btn btn-sm mt-3" onClick={handleProductAdd}>Add New Product</button>
+            {isAdmin && (
+              <button className="btn btn-sm mt-3" onClick={handleProductAdd}>Add New Product</button>
+            )}
             {/* Product Group Ends */}
 
         </div>
